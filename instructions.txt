@@ -1,81 +1,21 @@
-Generate java 8 spring boot api, repository and services with import statement which will fetch processed transaction from h2 database as array
-Array should have key as transactionId and value as status
-// This code is generated using model Llama2 70B Chat
-  Sure, here is an example of a Java 8 Spring Boot API, repository, and service that fetches processed transactions from an H2 database and returns them as an array with the transaction ID as the key and the status as the value:
+Generate java 8 spring boot api, repository and services with import statement which will fetch all transaction from h2 database 
+response should be like below structure
 
-First, add the necessary dependencies to your `pom.xml` file:
-```
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-    </dependency>
-</dependencies>
-```
-Next, create a `Transaction` entity:
-```
-@Entity
-@Table(name = "transactions")
-public class Transaction {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(name = "transaction_id")
-  private String transactionId;
-
-  @Column(name = "status")
-  private String status;
-
-  // Getters and setters
-}
-```
-Then, create a `TransactionRepository` interface that extends `JpaRepository`:
-```
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-
-  List<Map<String, Object>> findByStatus(String status);
-}
-```
-Next, create a `TransactionService` class that will handle the business logic:
-```
-@Service
-public class TransactionService {
-
-  @Autowired
-  private TransactionRepository transactionRepository;
-
-  public List<Map<String, Object>> getProcessedTransactions() {
-    return transactionRepository.findByStatus("processed");
-  }
-}
-```
-Finally, create a `TransactionController` class that will handle the API requests:
-```
-@RestController
-@RequestMapping("/api")
-public class TransactionController {
-
-  @Autowired
-  private TransactionService transactionService;
-
-  @GetMapping("/transactions")
-  public List<Map<String, Object>> getProcessedTransactions() {
-    return transactionService.getProcessedTransactions();
-  }
-}
-```
-To fetch the processed transactions from the database, you can use the `findByStatus` method in the `TransactionRepository` interface. This method will return a list of `Map` objects, where each `Map` has two entries: `transactionId` and `status`. The `transactionId` is the key and the `status` is the value.
-
-You can then return this list from the `getProcessedTransactions` method in the `TransactionService` class, and then from the `getProcessedTransactions` method in the `TransactionController` class.
-
-Note that this is just an example, you may need to adjust the code to fit your specific needs and database schema.
-Also, you should consider adding some error handling and edge cases to the code.
+data: [
+			{
+				transactionId: 09372362233323,
+				amount: '1.00',
+				debitAcc: 012345567,
+				creditAcc: 123545656,
+				lob: '',
+				txnType: '',
+				txnFreqType: '',
+				cifKey: '8382328378327',
+				status: '',
+				createDate: '2023/12/04 09:32:21 AM',
+				settlementDate: '2023/12/04 11:00:00 PM'
+			}
+	      ]
 ===============================================================================
 
 create a transactions table with columns as id, transactionId, status. Insert 10 sample records into the transactions table. The database should be spring boot with h2
