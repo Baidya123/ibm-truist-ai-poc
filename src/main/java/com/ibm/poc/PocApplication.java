@@ -22,8 +22,9 @@ public class PocApplication {
 			transactionsRepository.deleteAll();
 			for (int i = 0; i < 10; i++) {
 				Transaction transaction = new Transaction();
-				transaction.setTransactionId("txn-" + i);
+				
 				transaction.setStatus("pending");
+				transaction.setTransactionId((long) i);
 				transactionsRepository.save(transaction);
 			}
 
